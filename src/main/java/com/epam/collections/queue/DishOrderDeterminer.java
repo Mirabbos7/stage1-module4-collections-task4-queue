@@ -7,28 +7,19 @@ import java.util.Queue;
 
 public class DishOrderDeterminer {
     public List<Integer> determineDishOrder(int numberOfDishes, int everyDishNumberToEat) {
-        List<Integer> list = new ArrayList<>();
         Queue<Integer> queue = new LinkedList<>();
+        List<Integer> result = new ArrayList<>();
         for (int i = 1; i <= numberOfDishes; i++) {
             queue.offer(i);
         }
+
         while (!queue.isEmpty()) {
-            // Eat everyDishNumberToEat dishes
-            for (int i = 0; i < everyDishNumberToEat; i++) {
-                // If queue is empty, break the loop
-                if (queue.isEmpty()) {
-                    break;
-                }
-                // Eat the next dish
-                int eatenDish = queue.poll();
-                list.add(eatenDish);
+            for (int i = 0; i < everyDishNumberToEat - 1; i++) {
+                queue.offer(queue.poll());
             }
-            // Rotate the queue
-            if (!queue.isEmpty()) {
-                int lastDish = queue.poll();
-                queue.offer(lastDish);
-            }
+            result.add(queue.poll());
         }
-        return list;
+
+        return result;
     }
 }
